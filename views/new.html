@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery.min.js" type="text/javascript"></script>
+  
+  <script src="/javascripts/iframe_upload_event_handler.js" type="text/javascript"></script>
+  <script src="/javascripts/iframe_upload.js" type="text/javascript"></script>
+  <script src="/javascripts/upload_event_handler.js" type="text/javascript"></script>
+  <script src="/javascripts/progress_event_handler.js" type="text/javascript"></script>
+  <script src="/javascripts/upload.js" type="text/javascript"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+function uploadFile(){
+  var uid = Upload.generateUid();
+  var filename = Upload.extractFilename($('#file').val());
+  var uploadForm = $('#upload_form');
+  
+  uploadForm.attr('action', '/files?file_id='+uid);
+
+  $('#file_id').val(uid);
+  $('#upload_form #HTTP_X_FILE_NAME').val(filename);
+  $('#patch #filename').val(filename);
+
+  $('#errors').html("");
+  $('#progress').fadeIn(); 
+  $('#patch').fadeIn();
+
+  Upload.file(filename, uploadForm, uid);
+  
+  ProgressEventHandler.start(uid, $('#progress #percentage'));
+
+  return false;
+};
+</script>
+
+<div id="errors"> </div>
+
+<form enctype="multipart/form-data" id="upload_form" action="/files" method="POST" >
+  <input type="hidden" id="HTTP_X_FILE_NAME" name="HTTP_X_FILE_NAME"/>
+  <input name="file" size="27" type="file" id="file" onchange="uploadFile();"/>
+</form>
+  
+<div id="progress" style="display:none;">
+Status: <span id="percentage">0%</span> <span id="uploaded"></span>
+</div>
+  
+<form action="/files/update" method="POST" id="patch" style="display:none;">
+  <textarea id="description" name="description" rows="2" cols="20"></textarea><br/>
+  <input type="hidden" name="file_id" id="file_id" value="" /><br />
+  <input type="submit" name="submitDescription" id="submitDescription" value="Save" /><br />
+</form>
+
+</body>
+</html>

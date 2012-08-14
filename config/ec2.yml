@@ -1,0 +1,15 @@
+production:
+  s3_key: AKIAI4NUAYBGLVKVY4NA
+  s3_secret: 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
+  host: s3-eu-west-1.amazonaws.com
+  bucket: devourer-of-files-prod
+development:
+  s3_key: AKIAI4NUAYBGLVKVY4NA
+  s3_secret: 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
+  host: s3-eu-west-1.amazonaws.com
+  bucket: devourer-of-files-dev
+test:
+  s3_key: AKIAI4NUAYBGLVKVY4NA
+  s3_secret: 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
+  host: s3-eu-west-1.amazonaws.com
+  bucket: devourer-of-files-test
